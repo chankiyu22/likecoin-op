@@ -9,32 +9,32 @@ import { setupFundLikecoin } from "../simulate/likecollective/setup";
 import { StateRetriever } from "../simulate/likecollective/state";
 import { deployCollective } from "./factory";
 
-describe("LikeCollectiveSimulation", async function () {
-  it("should simulate the likecollective contract", async function () {
-    const { likecoin, likeCollective, likeStakePosition, publicClient } =
-      await loadFixture(deployCollective);
+const testDataFiles = fs.readdirSync("simulate/likecollective/simulations");
+for (const testDataFile of testDataFiles) {
+  describe(`LikeCollectiveSimulation:${testDataFile}`, async function () {
+    it("should simulate the likecollective contract", async function () {
+      const { likecoin, likeCollective, likeStakePosition, publicClient } =
+        await loadFixture(deployCollective);
 
-    const callExecutor = new CallExecutor(
-      publicClient,
-      likecoin,
-      likeCollective,
-      likeStakePosition,
-    );
-    const eventRetriever = new EventRetriever(
-      publicClient,
-      likeCollective,
-      likeStakePosition,
-    );
-    const stateRetriever = new StateRetriever(
-      likeCollective,
-      likeStakePosition,
-      likecoin,
-    );
+      const callExecutor = new CallExecutor(
+        publicClient,
+        likecoin,
+        likeCollective,
+        likeStakePosition,
+      );
+      const eventRetriever = new EventRetriever(
+        publicClient,
+        likeCollective,
+        likeStakePosition,
+      );
+      const stateRetriever = new StateRetriever(
+        likeCollective,
+        likeStakePosition,
+        likecoin,
+      );
 
-    let currentBlock = await publicClient.getBlockNumber();
+      let currentBlock = await publicClient.getBlockNumber();
 
-    const testDataFiles = fs.readdirSync("simulate/likecollective/simulations");
-    for (const testDataFile of testDataFiles) {
       const testData = fs.readFileSync(
         `simulate/likecollective/simulations/${testDataFile}`,
         "utf8",
@@ -82,6 +82,6 @@ describe("LikeCollectiveSimulation", async function () {
 
         currentBlock = txReceipt.blockNumber;
       }
-    }
+    });
   });
-});
+}
