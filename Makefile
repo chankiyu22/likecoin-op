@@ -15,7 +15,7 @@ local-contracts:
 	$(MAKE) -C operation init-local-state
 	$(MAKE) -C likecoin3 deploy-local
 	# Account #2: 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
-	$(MAKE) -C likecoin3 mint-local AMOUNT=100 TO=0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
+	$(MAKE) -C likecoin3 mint-local AMOUNT=10000 TO=0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
 
 .PHONY: abigen
 abigen:

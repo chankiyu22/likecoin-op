@@ -25,4 +25,8 @@ deploy-local:
 
 .PHONY: mint-local
 mint-local:
-	npx hardhat mint --network localhost --amount $(AMOUNT) --to $(TO)
+	DOTENV_CONFIG_PATH=.env \
+		npx hardhat mint \
+		--network localhost \
+		--likecoin 0x5540d1fdC1b1fec3Ed8AEF26f73951c6ce5F97A1 \
+		--amount $(AMOUNT) --to $(TO)
