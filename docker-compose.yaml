@@ -67,23 +67,18 @@ services:
     command: go run ./cmd/server
 
   eth-node:
-    image: node:24-bookworm
-    working_dir: /src
-    volumes:
-      - node-modules-eth-node:/src/node_modules
-      - ./likenft/hardhat.config.ts:/src/hardhat.config.ts:ro
-      - ./likenft/package.json:/src/package.json:ro
-      - ./likenft/package-lock.json:/src/package-lock.json
-      - ./likenft/tsconfig.json:/src/tsconfig.json:ro
-    env_file: ./deploy/env.operator
-    ports:
-      - "8545:8545"
+    image: oursky/supersim:go1.25-0.1.0-alpha.59
+    command: ["--interop.autorelay", "--l1.host=0.0.0.0", "--l2.host=0.0.0.0"]
+    tty: true
     healthcheck:
       test: "curl --silent --fail-with-body http://localhost:8545 -H \"Content-Type: application/json\" -d \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"eth_blockNumber\\\",\\\"params\\\":[],\\\"id\\\":1}\""
       interval: 1s
       timeout: 1s
       retries: 30
-    command: /bin/sh -c "npm install && npx hardhat node"
+    ports:
+      - "8545:8545"
+      - "9545:9545"
+      - "9546:9546"
 
   db-migration-backend:
     image: postgres:16
