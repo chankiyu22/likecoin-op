@@ -17,8 +17,11 @@ ci:
 	npm run test
 
 .PHONY: deploy-local
+deploy-local: export DOTENV_CONFIG_PATH=.env
+deploy-local: export HARDHAT_IGNITION_CONFIRM_RESET=false
+deploy-local: export HARDHAT_IGNITION_CONFIRM_DEPLOYMENT=false
 deploy-local:
-	DOTENV_CONFIG_PATH=.env npm run deploy:local -- --network localhost
+	npm run deploy:all-in-one:local -- --network localhost --reset
 
 .PHONY: mint-local
 mint-local:
