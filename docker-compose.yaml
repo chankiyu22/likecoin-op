@@ -88,7 +88,7 @@ services:
     restart: always
     env_file: ./migration-backend/.env
     ports:
-      - "5432:5432"
+      - "7265:5432"
     healthcheck:
       test: pg_isready -d $$DB_NAME -U $$DB_USER -p 5432 -h localhost
       interval: 1s
@@ -103,7 +103,7 @@ services:
     restart: always
     env_file: ./signer-backend/.env
     ports:
-      - "5433:5432"
+      - "21748:5432"
     healthcheck:
       test: pg_isready -d $$DB_NAME -U $$DB_USER -p 5432 -h localhost
       interval: 1s
@@ -114,7 +114,7 @@ services:
     image: redis
     restart: always
     ports:
-      - '6379:6379'
+      - "56619:6379"
     volumes:
       - data:/data
 

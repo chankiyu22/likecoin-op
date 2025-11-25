@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "${DB_PORT}:5432"
+      - "50544:5432"
     healthcheck:
       test: pg_isready -d ${DB_DATABASE} -U ${DB_USERNAME} -p 5432 -h localhost
       interval: 1s
@@ -163,7 +163,7 @@ services:
     image: redis
     restart: always
     ports:
-      - '6381:6379'
+      - "59508:6379"
     volumes:
       - redis_data:/data
 

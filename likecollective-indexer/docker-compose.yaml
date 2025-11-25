@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "${DB_PORT}:5432"
+      - "43732:5432"
     healthcheck:
       test: pg_isready -d ${DB_DATABASE} -U ${DB_USERNAME} -p 5432 -h localhost
       interval: 1s
@@ -25,7 +25,7 @@ services:
       POSTGRES_PASSWORD: ${DB_TIMESCALE_PASSWORD}
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
-      - "${DB_TIMESCALE_PORT}:5432"
+      - "53733:5432"
     healthcheck:
       test: pg_isready -d ${DB_TIMESCALE_DATABASE} -U ${DB_TIMESCALE_USERNAME} -p 5432 -h localhost
       interval: 1s
@@ -91,7 +91,7 @@ services:
     image: redis
     restart: always
     ports:
-      - 6379
+      - "64067:6379"
     volumes:
       - redis_data:/data
 
