@@ -19,6 +19,8 @@ services:
   psql_bp_timescale:
     image: timescale/timescaledb-ha:pg16
     restart: unless-stopped
+    depends_on:
+      - init_psql_bp_timescale
     environment:
       POSTGRES_DB: ${DB_TIMESCALE_DATABASE}
       POSTGRES_USER: ${DB_TIMESCALE_USERNAME}
@@ -31,6 +33,13 @@ services:
       interval: 1s
       timeout: 1s
       retries: 30
+    volumes:
+      - psql_volume_bp_timescale:/var/lib/postgresql/data
+
+  init_psql_bp_timescale:
+    image: busybox
+    restart: no
+    command: /bin/chmod 777 /var/lib/postgresql/data
     volumes:
       - psql_volume_bp_timescale:/var/lib/postgresql/data
 
